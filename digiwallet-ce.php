@@ -8,7 +8,7 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              http://example.com
+ * @link              https://github.com/jonasclaes/digiwallet-ce/
  * @since             0.0.1
  * @package           DigiWalletCE
  *
@@ -32,14 +32,14 @@ if ( ! defined( 'WPINC' ) ) {
 
 /**
  * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Start at version 0.0.1 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'DIGIWALLETCE_VERSION', '1.0.0' );
+define( 'DIGIWALLETCE_VERSION', '0.0.1' );
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-plugin-name-activator.php
+ * This action is documented in includes/DigiWalletCEActivator.php
  */
 function activate_plugin_name() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/DigiWalletCEActivator.php';
@@ -48,7 +48,7 @@ function activate_plugin_name() {
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-plugin-name-deactivator.php
+ * This action is documented in includes/DigiWalletCEDeactivator.php
  */
 function deactivate_plugin_name() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/DigiWalletCEDeactivator.php';
@@ -71,7 +71,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/DigiWalletCE.php';
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since    0.0.1
  */
 function run_plugin_name() {
 
