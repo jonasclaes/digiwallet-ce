@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/digiWalletCE" method="get">
+    <label for="amount">Bedrag:</label>
+    <select name="amount" id="amount" required>
+        <option value="0" selected disabled>Selecteer een bedrag</option>
+        <option value="100">&euro; 1.00</option>
+        <option value="250">&euro; 2.50</option>
+        <option value="500">&euro; 5.00</option>
+        <option value="1000">&euro; 10.00</option>
+        <option value="2500">&euro; 25.00</option>
+        <option value="5000">&euro; 50.00</option>
+    </select>
+    <label for="method">Betaalmethode:</label>
+    <select name="method" id="method" required>
+        <option value="0" selected disabled>Selecteer een betaalmethode</option>
+        <option value="Bancontact">Bancontact</option>
+        <option value="Ideal">iDeal</option>
+    </select>
+    <button type="submit">Doneer</button>
+</form>
+</body>
+</html>

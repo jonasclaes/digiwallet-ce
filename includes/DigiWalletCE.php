@@ -124,6 +124,13 @@ class DigiWalletCE {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/DigiWalletCEPublic.php';
 
+        /**
+         * The library responsible for handling payments.
+         */
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/lib/DigiWallet/autoload.php';
+
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/ActionTypeEnum.php';
+
 		$this->loader = new DigiWalletCELoader();
 
 	}
@@ -156,10 +163,12 @@ class DigiWalletCE {
 
 		$plugin_admin = new DigiWalletCEAdmin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-        $this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_page');
-        $this->loader->add_action( 'admin_init', $plugin_admin, 'page_init');
+		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+
+        // Backend menu and menu pages
+        $this->loader->add_action('admin_menu', $plugin_admin, 'add_plugin_page');
+        $this->loader->add_action('admin_init', $plugin_admin, 'page_init');
 
 	}
 
@@ -176,6 +185,9 @@ class DigiWalletCE {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+        $this->loader->add_filter('init', $plugin_public, 'rewrite_rules');
+        $this->loader->add_filter('template_redirect', $plugin_public, 'handle_request');
 
 	}
 

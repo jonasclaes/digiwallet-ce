@@ -121,6 +121,7 @@ class DigiWalletCEAdmin {
 
         <div class="wrap">
             <h2>DigiWallet Community Edition</h2>
+            <small><?php _e('Heads up! This plugin makes use of permalinks, it will not function correctly without.', 'digiwallet-ce'); ?></small>
             <p></p>
 
             <form method="post" action="options.php">
@@ -144,7 +145,7 @@ class DigiWalletCEAdmin {
 
         add_settings_section(
                 'digiwalletce_setting_section',
-                'Settings',
+                __('Settings', 'digiwallet-ce'),
                 array($this, 'section_info'),
                 'digiwalletce-admin'
         );

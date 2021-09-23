@@ -12,6 +12,8 @@
 
 namespace DigiWalletCE;
 
+use \DigiWallet as DigiWallet;
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -102,4 +104,105 @@ class DigiWalletCEPublic {
 
 	}
 
+    public function rewrite_rules() {
+        add_rewrite_tag('%digiWalletCE%', '([^&]+)');
+        add_rewrite_tag('%action%', '([^&]+)');
+        add_rewrite_tag('%data%', '([^&]+)');
+        add_rewrite_tag('%trxid%', '([^&]+)');
+        add_rewrite_tag('%method%', '([^&]+)');
+        add_rewrite_tag('%amount%', '([^&]+)');
+
+        add_rewrite_rule('^digiWalletCE$', 'index.php?digiWalletCE=1', 'top');
+    }
+
+    public function flush_rules() {
+        $this->rewrite_rules();
+        flush_rewrite_rules();
+    }
+
+    public function handle_request() {
+        if ( get_query_var('digiWalletCE', false) ) {
+            global $wpdb;
+            $action = intval(get_query_var('action', ActionTypeEnum::PAY));
+            $data = get_query_var('data');
+            $method = get_query_var('method');
+            $trxId = intval(get_query_var('trxid'));
+            $amount = intval(get_query_var('amount'));
+            $apiKey = get_option('digiwalletce')['api_key'];
+            $outletID = get_option('digiwalletce')['outlet_id'];
+
+            $baseUrl = get_bloginfo("wpurl") . "/digiWalletCE?action=";
+            $returnUrl = $baseUrl . ActionTypeEnum::RETURN;
+            $cancelUrl = $baseUrl . ActionTypeEnum::CANCELED;
+            $reportUrl = $baseUrl . ActionTypeEnum::REPORT;
+            $tableName = $wpdb->prefix . "digiwalletce_transactions";
+
+            switch ($action) {
+                case ActionTypeEnum::PAY:
+                    $startPaymentResult = DigiWallet\Transaction::model($method)
+                        ->outletId($outletID)
+                        ->amount($amount)
+                        ->description("Donatie")
+                        ->returnUrl($returnUrl)
+                        ->cancelUrl($cancelUrl)
+                        ->reportUrl($reportUrl)
+                        ->start();
+
+                    $transactionId = $startPaymentResult->transactionId;
+
+                    if ($wpdb->insert($tableName, array("transactionId" => $transactionId, "method" => $method, "amount" => $amount), array("%s", "%s", "%d"))) {
+                        header("Location: " . $startPaymentResult->url);
+                    } else {
+                        header("Location: " . $cancelUrl);
+                    }
+                    break;
+
+                case ActionTypeEnum::RETURN:
+                    $result = $wpdb->get_row("SELECT * FROM $tableName WHERE transactionId = $trxId", ARRAY_A);
+
+                    // Check if transaction was successful.
+                    $checkPaymentResult = DigiWallet\Transaction::model($result['method'])
+                        ->outletId($outletID)
+                        ->transactionId($trxId)
+                        ->check();
+
+                    if (!$checkPaymentResult->status) {
+                        header("Location: " . $cancelUrl . "&trxid=" . $trxId);
+                        exit;
+                    }
+
+                    $wpdb->update($tableName, array("status" => "paid"), array("transactionId" => $trxId));
+
+                    ?>
+                    <?php get_header() ?>
+                    <div id="container" style="text-align: center">
+                        <div id="content">
+                            <h1>Gelukt!</h1>
+                            <h3>Bedankt voor uw donatie van &euro; <?php echo number_format($result['amount'] / 100, 2) ?>!</h3>
+                        </div>
+                    </div>
+                    <?php get_footer() ?>
+                    <?php
+                    break;
+
+                case ActionTypeEnum::CANCELED:
+                    $wpdb->update($tableName, array("status" => "canceled"), array("transactionId" => $trxId));
+                    ?>
+                    <?php get_header() ?>
+                    <div id="container" style="text-align: center">
+                        <div id="content">
+                            <h1>Oops!</h1>
+                            <h3>Uw betaling is jammer genoeg niet gelukt.</h3>
+                        </div>
+                    </div>
+                    <?php get_footer() ?>
+                    <?php
+                    break;
+
+                case ActionTypeEnum::REPORT:
+                    break;
+            }
+            exit;
+        }
+    }
 }
