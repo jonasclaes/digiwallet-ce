@@ -153,7 +153,7 @@ class DigiWalletCEAdmin {
         // Settings fields
         add_settings_field(
                 'api_key',
-                'API key',
+                __("API key", "digiwallet-ce"),
                 array($this, 'api_key_callback'),
                 'digiwalletce-admin',
                 'digiwalletce_setting_section'
@@ -161,7 +161,7 @@ class DigiWalletCEAdmin {
 
         add_settings_field(
             'outlet_id',
-            'Outlet ID',
+            __("Outlet ID", "digiwallet-ce"),
             array($this, 'outlet_id_callback'),
             'digiwalletce-admin',
             'digiwalletce_setting_section'

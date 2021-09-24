@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-09-22T18:52:45+00:00\n"
+"POT-Creation-Date: 2021-09-24T07:20:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: digiwallet-ce\n"
@@ -24,7 +24,7 @@ msgstr ""
 
 #. Description of the plugin
 msgid "DigiWallet CE plugin enables users to pay with Bancontact, iDEAL, SEPA..."
-msgstr ""
+msgstr "DigiWallet CE plugin staat gebruikers toe om te doneren/betalen met Bancontact, iDEAL, SEPA ..."
 
 #. Author of the plugin
 msgid "Jonas Claes"
@@ -36,8 +36,37 @@ msgstr ""
 
 #: admin/DigiWalletCEAdmin.php:124
 msgid "Heads up! This plugin makes use of permalinks, it will not function correctly without."
-msgstr "Let op! Deze plugin maakt gebruik van permalinks, en zal niet correct werken zonder."
+msgstr "Opgelet! Deze plugin maakt gebruik van permalinks, en zal niet correct functioneren zonder."
 
 #: admin/DigiWalletCEAdmin.php:148
 msgid "Settings"
 msgstr "Instellingen"
+
+#: admin/DigiWalletCEAdmin.php:156
+msgid "API key"
+msgstr "API sleutel"
+
+#: admin/DigiWalletCEAdmin.php:164
+msgid "Outlet ID"
+msgstr ""
+
+#: public/DigiWalletCEPublic.php:145
+msgid "Donation"
+msgstr "Donatie"
+
+#: public/DigiWalletCEPublic.php:180
+msgid "Success!"
+msgstr "Gelukt!"
+
+#. translators: amount in euros rounded to 2 digits
+#: public/DigiWalletCEPublic.php:183
+msgid "Thank you for your donation of &euro;%.2f!"
+msgstr "Bedankt voor uw donatie van &euro;%.2f!"
+
+#: public/DigiWalletCEPublic.php:197
+msgid "Oops!"
+msgstr "Oeps!"
+
+#: public/DigiWalletCEPublic.php:198
+msgid "Your transaction failed. Please try again, or contact us if the problem persists."
+msgstr "Uw transactie faalde. Probeer het opnieuw, of als het probleem zich blijft voordoen, contacteer ons dan."

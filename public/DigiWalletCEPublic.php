@@ -142,7 +142,7 @@ class DigiWalletCEPublic {
                     $startPaymentResult = DigiWallet\Transaction::model($method)
                         ->outletId($outletID)
                         ->amount($amount)
-                        ->description("Donatie")
+                        ->description(__("Donation", "digiwallet-ce"))
                         ->returnUrl($returnUrl)
                         ->cancelUrl($cancelUrl)
                         ->reportUrl($reportUrl)
@@ -177,8 +177,11 @@ class DigiWalletCEPublic {
                     <?php get_header() ?>
                     <div id="container" style="text-align: center">
                         <div id="content">
-                            <h1>Gelukt!</h1>
-                            <h3>Bedankt voor uw donatie van &euro; <?php echo number_format($result['amount'] / 100, 2) ?>!</h3>
+                            <h1><?php _e("Success!", "digiwallet-ce"); ?></h1>
+                            <h3><?php
+                                /* translators: amount in euros rounded to 2 digits */
+                                echo sprintf(__("Thank you for your donation of &euro;%.2f!", "digiwallet-ce"), $result['amount'] / 100);
+                                ?></h3>
                         </div>
                     </div>
                     <?php get_footer() ?>
@@ -191,8 +194,8 @@ class DigiWalletCEPublic {
                     <?php get_header() ?>
                     <div id="container" style="text-align: center">
                         <div id="content">
-                            <h1>Oops!</h1>
-                            <h3>Uw betaling is jammer genoeg niet gelukt.</h3>
+                            <h1><?php _e("Oops!", "digiwallet-ce"); ?></h1>
+                            <h3><?php _e("Your transaction failed. Please try again, or contact us if the problem persists.", "digiwallet-ce"); ?></h3>
                         </div>
                     </div>
                     <?php get_footer() ?>
