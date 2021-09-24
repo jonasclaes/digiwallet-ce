@@ -127,7 +127,7 @@ class DigiWalletCEPublic {
             $data = get_query_var('data');
             $method = get_query_var('method');
             $trxId = intval(get_query_var('trxid'));
-            $amount = intval(get_query_var('amount'));
+            $amount = intval(floatval(get_query_var('amount')) * 100);
             $apiKey = get_option('digiwalletce')['api_key'];
             $outletID = get_option('digiwalletce')['outlet_id'];
 

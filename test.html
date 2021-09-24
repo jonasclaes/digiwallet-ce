@@ -7,20 +7,20 @@
 <body>
 <form action="/digiWalletCE" method="get">
     <label for="amount">Bedrag:</label>
-    <select name="amount" id="amount" required>
-        <option value="0" selected disabled>Selecteer een bedrag</option>
-        <option value="100">&euro; 1.00</option>
-        <option value="250">&euro; 2.50</option>
-        <option value="500">&euro; 5.00</option>
-        <option value="1000">&euro; 10.00</option>
-        <option value="2500">&euro; 25.00</option>
-        <option value="5000">&euro; 50.00</option>
-    </select>
+    <input type="text" name="amount" list="amount" required placeholder="Vul hier een aantal in euro in.">
+    <datalist id="amount">
+        <option value="1.00">&euro; 1.00</option>
+        <option value="2.50">&euro; 2.50</option>
+        <option value="5.00">&euro; 5.00</option>
+        <option value="10.00">&euro; 10.00</option>
+        <option value="25.00">&euro; 25.00</option>
+        <option value="50.00">&euro; 50.00</option>
+    </datalist>
     <label for="method">Betaalmethode:</label>
     <select name="method" id="method" required>
         <option value="0" selected disabled>Selecteer een betaalmethode</option>
         <option value="Bancontact">Bancontact</option>
-        <option value="Ideal">iDeal</option>
+        <option value="Ideal">iDEAL</option>
     </select>
     <button type="submit">Doneer</button>
 </form>
